@@ -208,7 +208,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-vim.api.nvim_create_autocmd('CmdlineLeave', {
+vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
   group = vim.api.nvim_create_augroup('kickstart-clear_cmdline', { clear = true }),
   callback = function()
     print ' '
