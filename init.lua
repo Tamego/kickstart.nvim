@@ -208,6 +208,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.api.nvim_create_autocmd('CmdlineLeave', {
+  group = vim.api.nvim_create_augroup('kickstart-clear_cmdline', { clear = true }),
+  callback = function()
+    print ' '
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
