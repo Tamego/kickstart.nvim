@@ -159,6 +159,10 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -208,7 +212,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
   group = vim.api.nvim_create_augroup('kickstart-clear_cmdline', { clear = true }),
   callback = function()
     print ' '
@@ -240,7 +244,6 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -593,6 +596,8 @@ require('lazy').setup({
         --
 
         typst_lsp = {},
+        texlab = {},
+        clangd = {},
 
         lua_ls = {
           -- cmd = {...},
@@ -899,7 +904,7 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
@@ -942,6 +947,23 @@ require('lazy').setup({
       }
       vim.keymap.set({ 'c', 'i' }, '<C-j>', '<Plug>(skkeleton-enable)')
     end,
+  },
+
+  {
+    'lervag/vimtex',
+    lazy = false, -- we don't want to lazy load VimTeX
+    -- tag = "v2.15", -- uncomment to pin to a specific release
+  },
+
+  {
+    -- amongst your other plugins
+    {
+      'akinsho/toggleterm.nvim',
+      version = '*',
+      opts = {--[[ things you want to change go here]]
+        open_mapping = [[<c-\>]],
+      },
+    },
   },
 }, {
   ui = {
