@@ -597,7 +597,12 @@ require('lazy').setup({
 
         typst_lsp = {},
         texlab = {},
-        clangd = {},
+        clangd = {
+          cmd = {
+            'clangd',
+            '--header-insertion=never',
+          },
+        },
 
         lua_ls = {
           -- cmd = {...},
@@ -963,6 +968,29 @@ require('lazy').setup({
       opts = {--[[ things you want to change go here]]
         open_mapping = [[<c-\>]],
       },
+    },
+
+    {
+      'akinsho/bufferline.nvim',
+      version = '*',
+      dependencies = 'nvim-tree/nvim-web-devicons',
+      opts = {
+        options = {
+          offsets = {
+            {
+              filetype = 'neo-tree',
+              text = 'Neo-tree',
+              highlight = 'Directory',
+              text_align = 'left',
+            },
+          },
+        },
+      },
+      config = function(_, opts)
+        require('bufferline').setup(opts)
+        vim.keymap.set('n', '[b', '<cmd>BufferLineCyclePrev<cr>')
+        vim.keymap.set('n', ']b', '<cmd>BufferLineCycleNext<cr>')
+      end,
     },
   },
 }, {
